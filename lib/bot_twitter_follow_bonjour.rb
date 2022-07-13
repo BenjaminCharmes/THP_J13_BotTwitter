@@ -17,7 +17,15 @@ def login_twitter
 end
 
 def follow_20_last_bonjour(client)
-  handle_to_follow = client.search("#bonjour_monde", result_type: "recent").take(20)
+
+  tweet_to_follow = client.search("#bonjour_monde").take(200)
+  all_handle_to_follow = []
+  tweet_to_follow.each do |tweet|
+  all_handle_to_follow.push(tweet.user.screen_name) 
+  end
+
+  handle_to_follow = all_handle_to_follow.uniq - ["BenjaminCharmes"]
+
   client.follow(handle_to_follow)
 end
 
